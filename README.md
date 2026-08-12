@@ -29,12 +29,6 @@ export default defineRoute({
 curl -fsSL https://raw.githubusercontent.com/tothalex/nulljs-public/main/install.sh | sh
 ```
 
-Or via npm/bun (installs the same binary through a launcher):
-
-```sh
-bun add -g @tothalex/nulljs   # or: npm i -g @tothalex/nulljs
-```
-
 Supported platforms: macOS (Apple Silicon), Linux x64, Linux arm64. Binaries are on the
 [releases page](https://github.com/tothalex/nulljs-public/releases); pin a version with
 `NULLJS_VERSION=vX.Y.Z` when running the installer.
