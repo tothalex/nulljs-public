@@ -31,7 +31,8 @@ curl -fsSL https://raw.githubusercontent.com/tothalex/nulljs-public/main/install
 
 Supported platforms: macOS (Apple Silicon), Linux x64, Linux arm64. Binaries are on the
 [releases page](https://github.com/tothalex/nulljs-public/releases); pin a version with
-`NULLJS_VERSION=vX.Y.Z` when running the installer.
+`NULLJS_VERSION=vX.Y.Z` when running the installer. Later, `nulljs update` upgrades
+in place (`nulljs update --check` to just look).
 
 ## Quickstart
 
