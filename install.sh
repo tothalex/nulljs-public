@@ -11,6 +11,36 @@ set -eu
 
 REPO="tothalex/nulljs-public"
 
+# Persist PATH in the login shell's profile (guarded against duplicates), like other
+# single-binary installers. $SHELL names the login shell even when piped through sh.
+add_to_path() {
+    dir="$1"
+    line="export PATH=\"$dir:\$PATH\""
+
+    case "$(basename "${SHELL:-sh}")" in
+        zsh)  profile="$HOME/.zshrc" ;;
+        bash) profile="$HOME/.bashrc" ;;
+        fish)
+            mkdir -p "$HOME/.config/fish"
+            profile="$HOME/.config/fish/config.fish"
+            line="fish_add_path $dir"
+            ;;
+        *)    profile="$HOME/.profile" ;;
+    esac
+
+    if [ -f "$profile" ] && grep -Fq "$dir" "$profile" 2>/dev/null; then
+        return
+    fi
+
+    mkdir -p "$(dirname "$profile")"
+
+    printf '\n# nulljs\n%s\n' "$line" >> "$profile"
+    echo ""
+    echo "Added $dir to PATH in $profile"
+    echo "Restart your shell, or run now:"
+    echo "  $line"
+}
+
 main() {
     os="$(uname -s)"
     arch="$(uname -m)"
@@ -77,11 +107,7 @@ main() {
 
     case ":$PATH:" in
         *":$dir:"*) ;;
-        *)
-            echo ""
-            echo "note: $dir is not on your PATH — add this to your shell profile:"
-            echo "  export PATH=\"$dir:\$PATH\""
-            ;;
+        *) add_to_path "$dir" ;;
     esac
 
     echo ""
