@@ -108,9 +108,12 @@ Shared config across all types: `timeout` (seconds), `size`
 ## Server-side-rendered pages
 
 A file under `src/page/` is an SSR page: the platform renders it to HTML per request
-and hydrates it in the browser with the same props. `props(request)` runs server-side
-with secrets and `cloud/*` access; returning a response-shaped value (a `redirect()`,
-a `notFound()`) short-circuits rendering. Pick your framework per page:
+and hydrates it in the browser with the same props. Discovery is recursive — a page's
+files can sit directly in `src/page/` or in their own subdirectory
+(`src/page/dashboard/dashboard.svelte` + `dashboard.ts`); either way `name` and `route`
+default from the file stem. `props(request)` runs server-side with secrets and
+`cloud/*` access; returning a response-shaped value (a `redirect()`, a `notFound()`)
+short-circuits rendering. Pick your framework per page:
 
 **React** (`src/page/home.tsx`):
 
